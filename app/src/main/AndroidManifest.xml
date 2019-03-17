@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.azadjs.librapp">
+
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning"
+        android:fullBackupContent="true">
+
+        <activity
+            android:name="com.azadjs.librapp.SplashActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.azadjs.librapp.MainActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.azadjs.librapp.MainActivity" />
+        </activity>
+
+        <activity
+            android:name="com.azadjs.librapp.LoginActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.azadjs.librapp.LoginActivity" />
+        </activity>
+
+        <activity
+            android:name="com.azadjs.librapp.SettingsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SettingsTheme">
+
+        </activity>
+
+        <activity
+            android:name="com.azadjs.librapp.AboutActivity"
+            android:theme="@style/SettingsTheme">
+
+        </activity>
+
+    </application>
+
+</manifest>
