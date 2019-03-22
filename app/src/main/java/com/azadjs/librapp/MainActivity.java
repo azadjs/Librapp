@@ -4,19 +4,16 @@ import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
-import android.util.Log;
+
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,13 +21,10 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton floatingActionButton;
     ImageView emptyView;
 
-    private RecyclerView recyclerView;
-    List<AppModel> appModelResult = AddAppDialog.getAppModelResult();
-    AddAppDialog addAppDialog = new AddAppDialog();
-    private AppAdapter appAdapter;
-    private RecyclerView.LayoutManager layoutManager;
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
+    Fragment fragment;
 
-    AppModel appModel;
 
 
     @Override
@@ -57,46 +51,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ////////////////////////////////////////////////////////////////////////////////////////////
-        //RECYCLER VIEW ADAPTER BINDING
-        ////////////////////////////////////////////////////////////////////////////////////////////
-
-        recyclerView = findViewById(R.id.app_list);
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-
-        appAdapter = new AppAdapter(AddAppDialog.getAppModelResult());
-
-        addAppDialog.setAppAdapter(appAdapter);
-
-        recyclerView.setAdapter(appAdapter);
-        appAdapter.notifyDataSetChanged();
-        if(appAdapter.getItemCount() == 0){
-            recyclerView.setVisibility(View.GONE);
-            emptyView.setVisibility(View.VISIBLE);
-        }else{
-            recyclerView.setVisibility(View.VISIBLE);
-            emptyView.setVisibility(View.GONE);
-        }
-
-        recyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(getApplicationContext(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        Toast.makeText(getApplicationContext(),"Clicked app"+appModel.getAppText(),Toast.LENGTH_SHORT).show();
-                        /*Intent browseIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(AddAppDialog.appUrl.getText().toString()));
-                        startActivity(browseIntent);*/
-                        Log.d("POSITION", "onItemClick position: " + position);
-
-                    }
-
-                    @Override
-                    public void onLongItemClick(View view, int position) {
-                        Intent browse = new Intent(Intent.ACTION_VIEW,Uri.parse(AddAppDialog.appUrl.getText().toString()));
-                        startActivity(browse);
-                    }
-                })
-        );
+        fragmentManager=getSupportFragmentManager();
+        fragment = new RecyclerFragment();
+        fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.recycler_fragment,fragment);
+        fragmentTransaction.commit();
     }
+
+    public void UpdateUI(){
+      getSupportFragmentManager().beginTransaction().replace(R.id.recycler_fragment,fragment).disallowAddToBackStack().commit();
+    }
+
+
 }

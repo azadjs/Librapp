@@ -25,30 +25,17 @@
             android:textStyle="bold"/>
 
     </com.google.android.material.appbar.AppBarLayout>
-    <LinearLayout
+
+    <FrameLayout
+        android:id="@+id/recycler_fragment"
+        android:name="com.azadjs.librapp.RecyclerFragment"
         android:layout_marginTop="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="16sp"
-        android:layout_marginRight="16sp">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/app_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none"
-            tools:listItem="@layout/fragment_list">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
-    </LinearLayout>
-        <ImageView
-            android:id="@+id/empty_view"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/content_description_empty"
-            android:layout_width="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/emptybox"/>
+        android:layout_marginRight="16sp"
+        tools:layout="@layout/fragment_recycler">
+    </FrameLayout>
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottom_app_bar"
@@ -61,6 +48,7 @@
         app:layout_scrollFlags="scroll|enterAlways"
         app:navigationIcon="@drawable/ic_menu_white_24dp"
         app:menu="@menu/bottom_nav_drawer_menu"/>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"

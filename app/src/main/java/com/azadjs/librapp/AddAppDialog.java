@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.webkit.URLUtil;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.google.android.material.button.MaterialButton;
@@ -22,7 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.Nullable;
-import androidx.lifecycle.Lifecycle;
+import androidx.fragment.app.Fragment;
+
 
 public class AddAppDialog extends BottomSheetDialog implements AdapterView.OnItemSelectedListener {
 
@@ -30,7 +32,7 @@ public class AddAppDialog extends BottomSheetDialog implements AdapterView.OnIte
     TextInputEditText appDesc;
     MaterialButton saveButton;
     Spinner spinnerCategory;
-    AppAdapter appAdapter;
+
 
 
     AppModel appModel = new AppModel();
@@ -40,14 +42,17 @@ public class AddAppDialog extends BottomSheetDialog implements AdapterView.OnIte
         return appModelResult;
     }
 
-    public void setAppAdapter(AppAdapter adapter) {
-        this.appAdapter = adapter;
-    }
 
     public static void setAppModelResult(List<AppModel> appModelResult) {
         AddAppDialog.appModelResult = appModelResult;
     }
 
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //Internet Check
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     private boolean checkConnectivity(){
         boolean connected = true;
         ConnectivityManager connectivityManager = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -106,15 +111,15 @@ public class AddAppDialog extends BottomSheetDialog implements AdapterView.OnIte
                     appModelResult.add(0,new AppModel(appModel.getImage(),appModel.getAppText(),appModel.getAppCategory(),appModel.getAppDesc()));
                     setAppModelResult(appModelResult);
 
-                    adapter.notifyDataSetChanged();
-
                     System.out.println(appModelResult.get(0).getImage());
                     System.out.println(appModelResult.get(0).getAppText());
                     System.out.println(appModelResult.get(0).getAppCategory());
                     System.out.println(appModelResult.get(0).getAppDesc());
+
+                    getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentById(R.id.recycler_fragment)).commitNow();
+                    getFragmentManager().popBackStackImmediate();
+                    getFragmentManager().beginTransaction().add(R.id.recycler_fragment,new RecyclerFragment()).commit();
                     dismiss();
-                    getActivity().finish();
-                    startActivity(getActivity().getIntent());
 
                 }else{
                     appUrl.setError("URL is required :)");
