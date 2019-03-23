@@ -6,7 +6,9 @@
     <string name="action_settings">Settings</string>
     <string name="content_description_empty">Nothing</string>
     <string name="save_button">Save</string>
-    <string name="url_info">Paste Play Store URL here</string>
-    <string name="url_desc_info">Type a description for this app</string>
+    <string name="url_info">Play Store URL</string>
+    <string name="category_info">Category</string>
+    <string name="url_desc_info">Description(by choice)</string>
     <string name="url_error">You should write the url correctly</string>
+    <string name="category_error">Please,select category</string>
 </resources>

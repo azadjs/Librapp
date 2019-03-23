@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/myCoordinatorLayout"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentStart="true"
     android:background="#616161">
 
     <LinearLayout
@@ -20,7 +23,8 @@
             android:id="@+id/spinner_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="20sp">
+            android:paddingBottom="20sp"
+            android:backgroundTint="@color/appColor">
 
         </Spinner>
 
@@ -66,5 +70,4 @@
             app:cornerRadius="10sp"
             app:backgroundTint="@color/appColor" />
     </LinearLayout>
-
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

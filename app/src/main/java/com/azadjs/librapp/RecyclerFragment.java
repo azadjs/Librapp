@@ -24,8 +24,6 @@ public class RecyclerFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private AppAdapter appAdapter;
-    List<AppModel> appModelResult = AddAppDialog.getAppModelResult();
-    AddAppDialog addAppDialog = new AddAppDialog();
     ImageView emptyView;
 
 

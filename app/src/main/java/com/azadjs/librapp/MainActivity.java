@@ -58,9 +58,5 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    public void UpdateUI(){
-      getSupportFragmentManager().beginTransaction().replace(R.id.recycler_fragment,fragment).disallowAddToBackStack().commit();
-    }
-
 
 }
