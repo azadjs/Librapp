@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import java.util.List;
+
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;

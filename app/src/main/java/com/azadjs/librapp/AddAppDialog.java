@@ -97,6 +97,7 @@ public class AddAppDialog extends BottomSheetDialog implements AdapterView.OnIte
             public void afterTextChanged(Editable s) {
                 if(URLUtil.isValidUrl(appUrl.getText().toString()))
                 new Parse().execute();
+                appModel.setAppUrl(appUrl.getText().toString());
             }
         });
 
@@ -108,7 +109,7 @@ public class AddAppDialog extends BottomSheetDialog implements AdapterView.OnIte
                 appModel.setAppText(Parse.eName);
                 if(appUrl.getText().toString().trim().length() != 0 && checkConnectivity()
                         && appModel.getAppText() != null && appModel.getImage() != null && !appModel.getAppCategory().equals("ERROR")) {
-                    AppModel myAppModel = new AppModel(appModel.getImage(),appModel.getAppText(),appModel.getAppCategory(),appModel.getAppDesc());
+                    AppModel myAppModel = new AppModel(appModel.getImage(),appModel.getAppText(),appModel.getAppCategory(),appModel.getAppDesc(),appModel.getAppUrl());
 
                     MainActivity.databaseReference.push().setValue(myAppModel);
 

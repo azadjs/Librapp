@@ -59,10 +59,10 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Context mContext = v.getContext();
-                //Intent intent = new Intent(Intent.ACTION_VIEW);
-                //intent.setData(Uri.parse());
-                //mContext.startActivity(intent);
+                Context mContext = v.getContext();
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(appModel.getAppUrl()));
+                mContext.startActivity(intent);
             }
         });
     }
