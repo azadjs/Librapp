@@ -18,6 +18,7 @@
         android:contentDescription="@string/content_description_empty"
         android:layout_width="wrap_content"
         android:layout_gravity="center"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:src="@drawable/emptybox"/>
 

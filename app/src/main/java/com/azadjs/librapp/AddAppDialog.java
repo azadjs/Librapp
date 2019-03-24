@@ -108,12 +108,13 @@ public class AddAppDialog extends BottomSheetDialog implements AdapterView.OnIte
                 appModel.setAppText(Parse.eName);
                 if(appUrl.getText().toString().trim().length() != 0 && checkConnectivity()
                         && appModel.getAppText() != null && appModel.getImage() != null && !appModel.getAppCategory().equals("ERROR")) {
-                    appModelResult.add(0,new AppModel(appModel.getImage(),appModel.getAppText(),appModel.getAppCategory(),appModel.getAppDesc()));
-                    setAppModelResult(appModelResult);
+                    AppModel myAppModel = new AppModel(appModel.getImage(),appModel.getAppText(),appModel.getAppCategory(),appModel.getAppDesc());
 
-                    getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentById(R.id.recycler_fragment)).commitNow();
-                    getFragmentManager().popBackStackImmediate();
-                    getFragmentManager().beginTransaction().add(R.id.recycler_fragment,new RecyclerFragment()).commit();
+                    MainActivity.databaseReference.push().setValue(myAppModel);
+
+                    setAppModelResult(appModelResult);
+                    getActivity().getSupportFragmentManager().beginTransaction().detach(getFragmentManager().findFragmentById(R.id.recycler_fragment)).commitNowAllowingStateLoss();
+                    getActivity().getSupportFragmentManager().beginTransaction().attach(new RecyclerFragment()).commitAllowingStateLoss();
                     dismiss();
                 }else{
                     if(appUrl.getText().toString().trim().length() == 0)

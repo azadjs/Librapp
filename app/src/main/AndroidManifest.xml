@@ -46,6 +46,7 @@
 
         <activity
             android:name="com.azadjs.librapp.SettingsActivity"
+            android:parentActivityName="com.azadjs.librapp.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SettingsTheme">
 
@@ -53,6 +54,8 @@
 
         <activity
             android:name="com.azadjs.librapp.AboutActivity"
+            android:parentActivityName="com.azadjs.librapp.MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/SettingsTheme">
 
         </activity>

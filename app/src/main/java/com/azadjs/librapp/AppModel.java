@@ -1,6 +1,11 @@
 package com.azadjs.librapp;
 
-public class AppModel {
+import com.google.firebase.database.IgnoreExtraProperties;
+
+import java.io.Serializable;
+
+@IgnoreExtraProperties
+public class AppModel implements Serializable {
     private String image,appText,appCategory,appDesc;
 
     public AppModel() {

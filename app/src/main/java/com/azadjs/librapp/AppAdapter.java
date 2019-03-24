@@ -1,10 +1,14 @@
 package com.azadjs.librapp;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import java.util.List;
@@ -46,11 +50,21 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull AppViewHolder holder, int position) {
-        AppModel appModel = mAppModelList.get(position);
+        final AppModel appModel = mAppModelList.get(position);
         holder.appText.setText(appModel.getAppText());
         holder.appCategory.setText(appModel.getAppCategory());
         holder.appDesc.setText(appModel.getAppDesc());
         Picasso.get().load(appModel.getImage()).into(holder.appImage);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Context mContext = v.getContext();
+                //Intent intent = new Intent(Intent.ACTION_VIEW);
+                //intent.setData(Uri.parse());
+                //mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override

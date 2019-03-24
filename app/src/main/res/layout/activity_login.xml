@@ -31,6 +31,7 @@
         android:id="@+id/login__text_relative"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_marginLeft="10sp"
         android:layout_marginRight="10sp"
         android:layout_below="@+id/login_logo_relative"
@@ -50,6 +51,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="80sp"
+            android:textSize="16sp"
+            android:layout_marginLeft="16sp"
+            android:layout_marginRight="16sp"
             android:layout_centerHorizontal="true"
             android:text="@string/app_desc"
             android:maxLines="1" />
@@ -63,7 +67,7 @@
         <com.google.android.gms.common.SignInButton
             android:id="@+id/google_sign"
             app:buttonSize="wide"
-            app:colorScheme="auto"
+            app:colorScheme="light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
