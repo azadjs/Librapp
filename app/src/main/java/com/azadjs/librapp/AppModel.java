@@ -6,13 +6,13 @@ import java.io.Serializable;
 
 @IgnoreExtraProperties
 public class AppModel implements Serializable {
-    private String image,appText,appCategory,appDesc;
-    private String appUrl;
+    private String appId, image, appText, appCategory, appDesc, appUrl;
 
     public AppModel() {
     }
 
-    public AppModel(String image, String appText, String appCategory, String appDesc, String appUrl) {
+    public AppModel(String appId, String image, String appText, String appCategory, String appDesc, String appUrl) {
+        this.appId = appId;
         this.image = image;
         this.appText = appText;
         this.appCategory = appCategory;
@@ -58,5 +58,13 @@ public class AppModel implements Serializable {
 
     public void setAppUrl(String appUrl) {
         this.appUrl = appUrl;
+    }
+
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
     }
 }

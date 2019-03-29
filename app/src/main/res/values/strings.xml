@@ -8,7 +8,7 @@
     <string name="save_button">Save</string>
     <string name="url_info">Play Store URL</string>
     <string name="category_info">Category</string>
-    <string name="url_desc_info">Description(by choice)</string>
+    <string name="url_desc_info">Description (by choice)</string>
     <string name="url_error">You should write the url correctly</string>
     <string name="category_error">Please,select category</string>
 </resources>

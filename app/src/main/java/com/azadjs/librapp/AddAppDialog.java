@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ import androidx.annotation.Nullable;
 
 public class AddAppDialog extends BottomSheetDialog implements AdapterView.OnItemSelectedListener {
 
+    private TextInputLayout appUrlLayout;
     static TextInputEditText appUrl;
     private TextInputEditText appDesc;
     private MaterialButton saveButton;
@@ -46,9 +48,6 @@ public class AddAppDialog extends BottomSheetDialog implements AdapterView.OnIte
     public static void setAppModelResult(List<AppModel> appModelResult) {
         AddAppDialog.appModelResult = appModelResult;
     }
-
-
-
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //Internet Check
@@ -68,6 +67,7 @@ public class AddAppDialog extends BottomSheetDialog implements AdapterView.OnIte
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_bottomsheet_add,container,false);
         final View viewPos = v.findViewById(R.id.myCoordinatorLayout);
+        appUrlLayout = v.findViewById(R.id.app_url_layout);
         appUrl = v.findViewById(R.id.app_url);
         appDesc = v.findViewById(R.id.app_desc);
         saveButton = v.findViewById(R.id.save_button);
@@ -108,18 +108,28 @@ public class AddAppDialog extends BottomSheetDialog implements AdapterView.OnIte
                 appModel.setImage(Parse.eImage);
                 appModel.setAppText(Parse.eName);
                 if(appUrl.getText().toString().trim().length() != 0 && checkConnectivity()
-                        && appModel.getAppText() != null && appModel.getImage() != null && !appModel.getAppCategory().equals("ERROR")) {
-                    AppModel myAppModel = new AppModel(appModel.getImage(),appModel.getAppText(),appModel.getAppCategory(),appModel.getAppDesc(),appModel.getAppUrl());
+                        && appModel.getAppText() != null && appModel.getImage() != null &&
+                        !appModel.getAppCategory().equals("ERROR")) {
 
-                    MainActivity.databaseReference.push().setValue(myAppModel);
+                    appUrlLayout.setError(null);
+                    String key = MainActivity.databaseReference.push().getKey();
+                    appModel.setAppId(key);
+                    AppModel myAppModel = new AppModel(key, appModel.getImage(),appModel.getAppText(),
+                            appModel.getAppCategory(),appModel.getAppDesc(),appModel.getAppUrl());
+
+                    MainActivity.databaseReference.child(key).setValue(myAppModel);
 
                     setAppModelResult(appModelResult);
+
+                    ////////////////////////////////////////////////////////////////////////////////
+                    //Reload Fragment
+                    ////////////////////////////////////////////////////////////////////////////////
                     getActivity().getSupportFragmentManager().beginTransaction().detach(getFragmentManager().findFragmentById(R.id.recycler_fragment)).commitNowAllowingStateLoss();
                     getActivity().getSupportFragmentManager().beginTransaction().attach(new RecyclerFragment()).commitAllowingStateLoss();
                     dismiss();
                 }else{
                     if(appUrl.getText().toString().trim().length() == 0)
-                    appUrl.setError("URL is required :)");
+                    appUrlLayout.setError(getText(R.string.url_error));
                     if(!checkConnectivity()){
                         Snackbar snackbar = Snackbar.make(viewPos, "Connection error", Snackbar.LENGTH_LONG)
                                 .setAction("SETTING", new View.OnClickListener() {
@@ -136,11 +146,9 @@ public class AddAppDialog extends BottomSheetDialog implements AdapterView.OnIte
                        textView.setTextColor(Color.RED);
                        textView.setText(R.string.category_error);
                     }
-
                 }
             }
         });
-
         return v;
     }
 

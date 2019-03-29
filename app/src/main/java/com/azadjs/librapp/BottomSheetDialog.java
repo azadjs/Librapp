@@ -31,10 +31,6 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
                         startActivity(new Intent(BottomSheetDialog.this.getActivity(),SettingsActivity.class));
                         getActivity().getSupportFragmentManager().beginTransaction().remove(BottomSheetDialog.this).commit();
                         return true;
-                    case R.id.toolbar_about:
-                        startActivity(new Intent(BottomSheetDialog.this.getActivity(),AboutActivity.class));
-                        getActivity().getSupportFragmentManager().beginTransaction().remove(BottomSheetDialog.this).commit();
-                        return true;
                     case R.id.toolbar_signout:
                         startActivity(new Intent(BottomSheetDialog.this.getActivity(),LoginActivity.class));
                         mAuth.getInstance().signOut();

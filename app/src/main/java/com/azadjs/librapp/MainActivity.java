@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton floatingActionButton;
 
 
-    //AppModel appModel = new AppModel();
+
     private static List<AppModel> appModelResult = new ArrayList<>();
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
@@ -49,10 +49,12 @@ public class MainActivity extends AppCompatActivity {
         bottomAppBar = findViewById(R.id.bottom_app_bar);
         setSupportActionBar(bottomAppBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         floatingActionButton = findViewById(R.id.fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 AddAppDialog addAppDialog = new AddAppDialog();
                 addAppDialog.show(getSupportFragmentManager(), "AddBottomSheet");
             }
@@ -75,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         if (databaseReference == null) {
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-            databaseReference = FirebaseDatabase.getInstance().getReference("Apps").child("Users").child(mAuth.getUid());
+            databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getUid());
 
             databaseReference.keepSynced(true);
 
@@ -86,17 +88,16 @@ public class MainActivity extends AppCompatActivity {
                     AppModel appModel = dataSnapshot.getValue(AppModel.class);
                     appModelResult.add(0, appModel);
                     AddAppDialog.setAppModelResult(appModelResult);
-                    reLoadFragment(fragment);
+                    System.out.println(dataSnapshot.getRef().getKey());
+                    reloadFragment(fragment);
                 }
 
                 @Override
                 public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
                 }
 
                 @Override
                 public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
                 }
 
                 @Override
@@ -112,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void reLoadFragment(Fragment fragment)
+    public void reloadFragment(Fragment fragment)
     {
         getSupportFragmentManager().beginTransaction().detach(fragment).commitNowAllowingStateLoss();
         getSupportFragmentManager().beginTransaction().attach(fragment).commitAllowingStateLoss();

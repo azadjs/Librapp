@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
 
     private List<AppModel> mAppModelList;
+    FirebaseAuth mAuth;
 
     public AppAdapter(List<AppModel> appModelList) {
         mAppModelList = appModelList;
@@ -26,8 +27,9 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
 
     public static class AppViewHolder extends RecyclerView.ViewHolder{
 
-        public ImageView appImage;
+        public ImageView appImage,appDelete;
         public TextView appText,appCategory,appDesc;
+
 
         public AppViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -36,7 +38,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
             appText = itemView.findViewById(R.id.app_text_list);
             appCategory = itemView.findViewById(R.id.app_category_list);
             appDesc = itemView.findViewById(R.id.app_desc_list);
-
+            appDelete = itemView.findViewById(R.id.app_delete);
         }
     }
 
@@ -49,7 +51,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AppViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AppViewHolder holder, final int position) {
         final AppModel appModel = mAppModelList.get(position);
         holder.appText.setText(appModel.getAppText());
         holder.appCategory.setText(appModel.getAppCategory());
@@ -65,7 +67,22 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
                 mContext.startActivity(intent);
             }
         });
+
+        mAuth = FirebaseAuth.getInstance();
+        holder.appDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAppModelList.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, mAppModelList.size());
+                MainActivity.databaseReference.child(appModel.getAppId()).removeValue();
+                System.out.println(mAuth.getUid()+"//"+appModel.getAppId());
+                System.out.println(MainActivity.databaseReference.child(mAuth.getUid()).child(appModel.getAppId()));
+            }
+        });
     }
+
+
 
     @Override
     public int getItemCount() {

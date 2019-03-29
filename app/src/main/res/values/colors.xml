@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#eeeeee</color>
-    <color name="colorPrimaryDark">#eeeeee</color>
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorPrimaryDark">#ffffff</color>
     <color name="colorAccent">#333333</color>
     <color name="appColor">#17b2aa</color>
+    <color name="accentColor">#ef5350</color>
+    <color name="secondColor">#17b2b2</color>
+    <color name="black">#212121</color>
 </resources>

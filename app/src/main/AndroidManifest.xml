@@ -30,10 +30,16 @@
 
         <activity
             android:name="com.azadjs.librapp.MainActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.azadjs.librapp.MainActivity" />
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="text/plain"/>
+            </intent-filter>
         </activity>
 
         <activity
@@ -46,14 +52,6 @@
 
         <activity
             android:name="com.azadjs.librapp.SettingsActivity"
-            android:parentActivityName="com.azadjs.librapp.MainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/SettingsTheme">
-
-        </activity>
-
-        <activity
-            android:name="com.azadjs.librapp.AboutActivity"
             android:parentActivityName="com.azadjs.librapp.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SettingsTheme">
