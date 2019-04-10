@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -18,11 +20,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
 
-    private List<AppModel> mAppModelList;
+    private List<AppModel> appModelList;
     FirebaseAuth mAuth;
 
     public AppAdapter(List<AppModel> appModelList) {
-        mAppModelList = appModelList;
+        this.appModelList = appModelList;
     }
 
     public static class AppViewHolder extends RecyclerView.ViewHolder{
@@ -51,8 +53,8 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AppViewHolder holder, final int position) {
-        final AppModel appModel = mAppModelList.get(position);
+    public void onBindViewHolder(@NonNull final AppViewHolder holder, final int position) {
+        final AppModel appModel = appModelList.get(position);
         holder.appText.setText(appModel.getAppText());
         holder.appCategory.setText(appModel.getAppCategory());
         holder.appDesc.setText(appModel.getAppDesc());
@@ -72,12 +74,19 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
         holder.appDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAppModelList.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, mAppModelList.size());
-                MainActivity.databaseReference.child(appModel.getAppId()).removeValue();
-                System.out.println(mAuth.getUid()+"//"+appModel.getAppId());
-                System.out.println(MainActivity.databaseReference.child(mAuth.getUid()).child(appModel.getAppId()));
+                if(appModelList.size() > 1) {
+                    appModelList.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, appModelList.size());
+                    MainActivity.databaseReference.child(appModel.getAppId()).removeValue();
+                }else if(appModelList.size() == 1){
+                    appModelList.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, appModelList.size());
+                    MainActivity.databaseReference.child(appModel.getAppId()).removeValue();
+                    RecyclerFragment recyclerFragment = new RecyclerFragment();
+                    recyclerFragment.changeView();
+                }
             }
         });
     }
@@ -86,7 +95,12 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
 
     @Override
     public int getItemCount() {
-        return mAppModelList.size();
+        return appModelList.size();
     }
+
+    /*public void filterList(List<AppModel> filteredList){
+       this.appModelList = filteredList;
+       notifyDataSetChanged();
+    }*/
 
 }

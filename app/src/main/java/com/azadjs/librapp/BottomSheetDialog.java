@@ -16,14 +16,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class BottomSheetDialog extends BottomSheetDialogFragment {
-    private FirebaseAuth mAuth;
+    FirebaseAuth mAuth;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_bottomsheet, container, false);
-        final NavigationView navigationView = (NavigationView) v.findViewById(R.id.navigation_view);
+        final NavigationView navigationView = v.findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {

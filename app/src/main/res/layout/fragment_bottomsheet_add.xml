@@ -59,13 +59,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="5sp"
-            android:layout_marginEnd="5sp"
             android:hint="@string/url_desc_info"
             android:textColorHint="@color/appColor"
             app:boxStrokeColor="@color/appColor"
+            app:counterEnabled="true"
+            app:counterMaxLength="40"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/app_desc"
+                android:maxLength="40"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>

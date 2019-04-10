@@ -20,13 +20,26 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
+    EditText searchBar;
+    TextView appBarText;
+    ImageButton cancelSearchButton;
+    LinearLayout searchBarLayout;
 
     BottomAppBar bottomAppBar;
     FloatingActionButton floatingActionButton;
@@ -34,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private static List<AppModel> appModelResult = new ArrayList<>();
+    AppAdapter appAdapter;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
     Fragment fragment;
@@ -46,6 +60,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        searchBar = findViewById(R.id.search_bar);
+        appBarText = findViewById(R.id.app_bar_text);
+        appAdapter = new AppAdapter(AddAppDialog.getAppModelResult());
+        cancelSearchButton = findViewById(R.id.cancel_search);
+        searchBarLayout = findViewById(R.id.search_layout);
         bottomAppBar = findViewById(R.id.bottom_app_bar);
         setSupportActionBar(bottomAppBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -54,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 AddAppDialog addAppDialog = new AddAppDialog();
                 addAppDialog.show(getSupportFragmentManager(), "AddBottomSheet");
             }
@@ -68,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         fragmentManager = getSupportFragmentManager();
         fragment = new RecyclerFragment();
         fragmentTransaction = fragmentManager.beginTransaction();
@@ -78,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
         if (databaseReference == null) {
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
             databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getUid());
-
             databaseReference.keepSynced(true);
 
             Query query = databaseReference;
@@ -88,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                     AppModel appModel = dataSnapshot.getValue(AppModel.class);
                     appModelResult.add(0, appModel);
                     AddAppDialog.setAppModelResult(appModelResult);
-                    System.out.println(dataSnapshot.getRef().getKey());
+
                     reloadFragment(fragment);
                 }
 
@@ -111,6 +129,64 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+        cancelSearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(searchBarLayout.getWindowToken(), 0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                searchBarLayout.setVisibility(View.GONE);
+                searchBar.setText(null);
+                appBarText.setVisibility(View.VISIBLE);
+            }
+        });
+
+        /*searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filter(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+            }
+        });*/
+    }
+
+    /*private void filter(String text) {
+        ArrayList<AppModel> filteredApps = new ArrayList<>();
+        for (AppModel s : appModelResult) {
+            if(s.getAppText().toLowerCase().contains(text.toLowerCase())){
+                filteredApps.add(s);
+                reloadFragment(fragment);
+            }
+        }
+        appAdapter.filterList(filteredApps);
+    }*/
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.other_menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.toolbar_search:
+                searchBarLayout.setVisibility(View.VISIBLE);
+                appBarText.setVisibility(View.GONE);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void reloadFragment(Fragment fragment)
@@ -118,6 +194,5 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().detach(fragment).commitNowAllowingStateLoss();
         getSupportFragmentManager().beginTransaction().attach(fragment).commitAllowingStateLoss();
     }
-
 
 }

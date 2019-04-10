@@ -38,7 +38,7 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        },500);
+        },300);
     }
 
     private void navigateToLogin(){
@@ -50,6 +50,6 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        },500);
+        },300);
     }
 }

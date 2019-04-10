@@ -16,6 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class RecyclerFragment extends Fragment {
 
+    public RecyclerFragment() {
+    }
+
     @Override
     public void setTargetFragment(@Nullable Fragment fragment, int requestCode) {
         super.setTargetFragment(fragment, requestCode);
@@ -24,8 +27,7 @@ public class RecyclerFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private AppAdapter appAdapter;
-    ImageView emptyView;
-
+    private ImageView emptyView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,7 +47,12 @@ public class RecyclerFragment extends Fragment {
         appAdapter = new AppAdapter(AddAppDialog.getAppModelResult());
         recyclerView.setAdapter(appAdapter);
         appAdapter.notifyDataSetChanged();
+        changeView();
 
+        return v;
+    }
+
+    public void changeView(){
         if(appAdapter.getItemCount() == 0){
             recyclerView.setVisibility(View.GONE);
             emptyView.setVisibility(View.VISIBLE);
@@ -53,9 +60,6 @@ public class RecyclerFragment extends Fragment {
             recyclerView.setVisibility(View.VISIBLE);
             emptyView.setVisibility(View.GONE);
         }
-
-
-        return v;
     }
 
 

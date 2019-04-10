@@ -22,10 +22,17 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
@@ -111,22 +118,41 @@ public class AddAppDialog extends BottomSheetDialog implements AdapterView.OnIte
                         && appModel.getAppText() != null && appModel.getImage() != null &&
                         !appModel.getAppCategory().equals("ERROR")) {
 
-                    appUrlLayout.setError(null);
-                    String key = MainActivity.databaseReference.push().getKey();
-                    appModel.setAppId(key);
-                    AppModel myAppModel = new AppModel(key, appModel.getImage(),appModel.getAppText(),
-                            appModel.getAppCategory(),appModel.getAppDesc(),appModel.getAppUrl());
+                    DatabaseReference postRef = MainActivity.databaseReference;
+                    postRef.orderByChild("appText").equalTo(appModel.getAppText())
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if(dataSnapshot.exists()){
+                                        Snackbar snackbar = Snackbar.make(viewPos, "This app exists in your library", Snackbar.LENGTH_SHORT);
+                                        snackbar.show();
+                                    } else {
+                                        final String key = MainActivity.databaseReference.push().getKey();
+                                        appModel.setAppId(key);
+                                        ////////////////////////////////////////////////////////////////////////////////
+                                        //Add field in list and database
+                                        ////////////////////////////////////////////////////////////////////////////////
+                                        AppModel myAppModel = new AppModel(key, appModel.getImage(),appModel.getAppText(),
+                                                appModel.getAppCategory(),appModel.getAppDesc(),appModel.getAppUrl());
+                                        MainActivity.databaseReference.child(key).setValue(myAppModel);
+                                        setAppModelResult(appModelResult);
+                                        ////////////////////////////////////////////////////////////////////////////////
+                                        //Reload Fragment
+                                        ////////////////////////////////////////////////////////////////////////////////
+                                        getActivity().getSupportFragmentManager().beginTransaction().detach(getFragmentManager().findFragmentById(R.id.recycler_fragment)).commitNowAllowingStateLoss();
+                                        getActivity().getSupportFragmentManager().beginTransaction().attach(new RecyclerFragment()).commitAllowingStateLoss();
 
-                    MainActivity.databaseReference.child(key).setValue(myAppModel);
+                                        dismiss();
+                                    }
+                                }
 
-                    setAppModelResult(appModelResult);
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    ////////////////////////////////////////////////////////////////////////////////
-                    //Reload Fragment
-                    ////////////////////////////////////////////////////////////////////////////////
-                    getActivity().getSupportFragmentManager().beginTransaction().detach(getFragmentManager().findFragmentById(R.id.recycler_fragment)).commitNowAllowingStateLoss();
-                    getActivity().getSupportFragmentManager().beginTransaction().attach(new RecyclerFragment()).commitAllowingStateLoss();
-                    dismiss();
+                                }
+                            });
+                   //
+
                 }else{
                     if(appUrl.getText().toString().trim().length() == 0)
                     appUrlLayout.setError(getText(R.string.url_error));
@@ -166,4 +192,6 @@ public class AddAppDialog extends BottomSheetDialog implements AdapterView.OnIte
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
+
 }
