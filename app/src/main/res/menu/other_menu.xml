@@ -6,4 +6,17 @@
         android:icon="@drawable/ic_search"
         android:title="@string/action_search"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/toolbar_last_added"
+        android:title="@string/action_sort_by_last_added"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/toolbar_alphabet"
+        android:title="@string/action_sort_by_name"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/toolbar_category"
+        android:title="@string/action_sort_by_category"
+        app:showAsAction="never"/>
+
 </menu>

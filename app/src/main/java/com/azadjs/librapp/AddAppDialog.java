@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.webkit.URLUtil;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -29,8 +30,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -114,6 +118,7 @@ public class AddAppDialog extends BottomSheetDialog implements AdapterView.OnIte
                 appModel.setAppDesc(appDesc.getText().toString());
                 appModel.setImage(Parse.eImage);
                 appModel.setAppText(Parse.eName);
+                appModel.setAppAddDate(new Date());
                 if(appUrl.getText().toString().trim().length() != 0 && checkConnectivity()
                         && appModel.getAppText() != null && appModel.getImage() != null &&
                         !appModel.getAppCategory().equals("ERROR")) {
@@ -133,7 +138,7 @@ public class AddAppDialog extends BottomSheetDialog implements AdapterView.OnIte
                                         //Add field in list and database
                                         ////////////////////////////////////////////////////////////////////////////////
                                         AppModel myAppModel = new AppModel(key, appModel.getImage(),appModel.getAppText(),
-                                                appModel.getAppCategory(),appModel.getAppDesc(),appModel.getAppUrl());
+                                                appModel.getAppCategory(),appModel.getAppDesc(),appModel.getAppUrl(), appModel.getAppAddDate());
                                         MainActivity.databaseReference.child(key).setValue(myAppModel);
                                         setAppModelResult(appModelResult);
                                         ////////////////////////////////////////////////////////////////////////////////
@@ -141,7 +146,6 @@ public class AddAppDialog extends BottomSheetDialog implements AdapterView.OnIte
                                         ////////////////////////////////////////////////////////////////////////////////
                                         getActivity().getSupportFragmentManager().beginTransaction().detach(getFragmentManager().findFragmentById(R.id.recycler_fragment)).commitNowAllowingStateLoss();
                                         getActivity().getSupportFragmentManager().beginTransaction().attach(new RecyclerFragment()).commitAllowingStateLoss();
-
                                         dismiss();
                                     }
                                 }

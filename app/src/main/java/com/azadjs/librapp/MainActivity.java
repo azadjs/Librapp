@@ -17,11 +17,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +34,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -45,9 +49,8 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton floatingActionButton;
 
 
-
     private static List<AppModel> appModelResult = new ArrayList<>();
-    AppAdapter appAdapter;
+
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
     Fragment fragment;
@@ -60,15 +63,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         searchBar = findViewById(R.id.search_bar);
         appBarText = findViewById(R.id.app_bar_text);
-        appAdapter = new AppAdapter(AddAppDialog.getAppModelResult());
         cancelSearchButton = findViewById(R.id.cancel_search);
         searchBarLayout = findViewById(R.id.search_layout);
         bottomAppBar = findViewById(R.id.bottom_app_bar);
+
         setSupportActionBar(bottomAppBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         floatingActionButton = findViewById(R.id.fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +83,20 @@ public class MainActivity extends AppCompatActivity {
                 addAppDialog.show(getSupportFragmentManager(), "AddBottomSheet");
             }
         });
+
+        /*Intent intent = getIntent();
+        String action = intent.getAction();
+        System.out.println(action);
+        String type = intent.getType();
+        System.out.println(type);
+        if(Intent.ACTION_SEND.equals(action) && type != null){
+            if("text/*".equals(type)){
+                addAppDialog.show(getSupportFragmentManager(), "AddBottomSheet");
+                String getIntentAppName = intent.getStringExtra(Intent.EXTRA_TEXT);
+                EditText text = AddAppDialog.getAppUrl();
+                text.setText(getIntentAppName);
+            }
+        }*/
 
         bottomAppBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,6 +164,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
         /*searchBar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -183,16 +205,62 @@ public class MainActivity extends AppCompatActivity {
             case R.id.toolbar_search:
                 searchBarLayout.setVisibility(View.VISIBLE);
                 appBarText.setVisibility(View.GONE);
+                searchBar.requestFocus();
+                InputMethodManager methodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                methodManager.showSoftInput(searchBar, InputMethodManager.SHOW_IMPLICIT);
+                return true;
+
+            case R.id.toolbar_last_added:
+                Collections.sort(appModelResult, new Comparator<AppModel>() {
+                    @Override
+                    public int compare(AppModel o1, AppModel o2) {
+                        int compareByLastAdded = o2.getAppAddDate().compareTo(o1.getAppAddDate());
+                        SharedPreferences preferences = getSharedPreferences("Librapp", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putInt("ByLastAdded",compareByLastAdded);
+                        editor.commit();
+                        return compareByLastAdded;
+                    }
+                });
+                reloadFragment(fragment);
+                return true;
+
+            case R.id.toolbar_alphabet:
+                Collections.sort(appModelResult, new Comparator<AppModel>() {
+                    @Override
+                    public int compare(AppModel o1, AppModel o2) {
+                    int compareByAppText = o1.getAppText().compareTo(o2.getAppText());
+                    SharedPreferences preferences = getSharedPreferences("Librapp", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putInt("ByAppText",compareByAppText);
+                    editor.commit();
+                    return compareByAppText;
+                    }
+                });
+                reloadFragment(fragment);
+                return true;
+
+            case R.id.toolbar_category:
+                Collections.sort(appModelResult, new Comparator<AppModel>() {
+                    @Override
+                    public int compare(AppModel o1, AppModel o2) {
+                        int compareByAppCategory = o1.getAppCategory().compareTo(o2.getAppCategory());
+                        SharedPreferences preferences = getSharedPreferences("Librapp", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putInt("ByAppCategory",compareByAppCategory);
+                        editor.commit();
+                        return compareByAppCategory;
+                    }
+                });
+                reloadFragment(fragment);
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void reloadFragment(Fragment fragment)
-    {
+    public void reloadFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().detach(fragment).commitNowAllowingStateLoss();
         getSupportFragmentManager().beginTransaction().attach(fragment).commitAllowingStateLoss();
     }
-
 }

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -84,8 +84,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
                     notifyItemRemoved(position);
                     notifyItemRangeChanged(position, appModelList.size());
                     MainActivity.databaseReference.child(appModel.getAppId()).removeValue();
-                    RecyclerFragment recyclerFragment = new RecyclerFragment();
-                    recyclerFragment.changeView();
+                    RecyclerFragment.getInstance().onRefresh();
                 }
             }
         });

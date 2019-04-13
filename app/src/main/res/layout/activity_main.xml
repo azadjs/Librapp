@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -31,14 +31,17 @@
             android:layout_width="0sp"
             android:layout_height="?actionBarSize"
             android:layout_weight="1"
+            android:textColor="@color/gray"
+            android:backgroundTint="@color/gray"
             android:inputType="text" />
         <ImageButton
             android:id="@+id/cancel_search"
-            android:layout_width="40sp"
-            android:layout_height="?actionBarSize"
-            android:src="@drawable/ic_add"
-            android:background="@color/colorPrimary"
-            android:rotation="45"/>
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_cancel"
+            android:tint="@color/gray"
+            android:background="@color/colorPrimary" />
         </LinearLayout>
         <TextView
             android:id="@+id/app_bar_text"
@@ -48,7 +51,7 @@
             android:text="@string/app_name"
             android:gravity="center"
             android:layout_gravity="center"
-            android:textSize="24sp"
+            android:textSize="22sp"
             android:textStyle="bold"
             android:visibility="visible"/>
 
@@ -62,12 +65,10 @@
         android:layout_height="match_parent"
         android:paddingLeft="12sp"
         android:paddingRight="12sp"
+        android:paddingBottom="12sp"
         tools:layout="@layout/fragment_recycler">
     </FrameLayout>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottom_app_bar"
             android:layout_width="match_parent"
@@ -90,6 +91,5 @@
             app:layout_anchor="@id/bottom_app_bar"
             app:borderWidth="0dp"
             android:backgroundTint="@color/accentColor" />
-         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

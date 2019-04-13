@@ -12,9 +12,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
-public class RecyclerFragment extends Fragment {
+public class RecyclerFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public RecyclerFragment() {
     }
@@ -23,11 +24,14 @@ public class RecyclerFragment extends Fragment {
     public void setTargetFragment(@Nullable Fragment fragment, int requestCode) {
         super.setTargetFragment(fragment, requestCode);
     }
-
+    private static RecyclerFragment instance;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private AppAdapter appAdapter;
     private ImageView emptyView;
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,9 @@ public class RecyclerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_recycler, container, false);
+        instance = this;
+        mSwipeRefreshLayout = v.findViewById(R.id.swipe_to_refresh);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
         recyclerView = v.findViewById(R.id.app_list);
         emptyView = v.findViewById(R.id.empty_view);
         recyclerView.setHasFixedSize(true);
@@ -52,6 +59,10 @@ public class RecyclerFragment extends Fragment {
         return v;
     }
 
+    public static RecyclerFragment getInstance(){
+        return instance;
+    }
+
     public void changeView(){
         if(appAdapter.getItemCount() == 0){
             recyclerView.setVisibility(View.GONE);
@@ -61,6 +72,19 @@ public class RecyclerFragment extends Fragment {
             emptyView.setVisibility(View.GONE);
         }
     }
+
+    @Override
+    public void onRefresh() {
+        mSwipeRefreshLayout.setRefreshing(true);
+        changeView();
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    /*public void changeEmptyView(){
+        if(appAdapter.getItemCount() == 0){
+            emptyView.setVisibility(View.VISIBLE);
+        }
+    }*/
 
 
 }

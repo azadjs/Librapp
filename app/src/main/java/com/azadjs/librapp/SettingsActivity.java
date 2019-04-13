@@ -5,9 +5,11 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    TextView appVersion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,5 +28,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
     });
 
+        appVersion = findViewById(R.id.app_version);
+        appVersion.setText(BuildConfig.VERSION_NAME);
 }
 }
