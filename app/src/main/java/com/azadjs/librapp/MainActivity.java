@@ -17,9 +17,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.app.Activity;
+
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -41,7 +40,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     EditText searchBar;
-    TextView appBarText;
+    static TextView appBarText;
     ImageButton cancelSearchButton;
     LinearLayout searchBarLayout;
 
@@ -57,7 +56,9 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     public static DatabaseReference databaseReference;
 
-
+    public static TextView getAppBarText() {
+        return appBarText;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -229,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
                 Collections.sort(appModelResult, new Comparator<AppModel>() {
                     @Override
                     public int compare(AppModel o1, AppModel o2) {
-                    int compareByAppText = o1.getAppText().compareTo(o2.getAppText());
+                    int compareByAppText = o1.getAppText().toLowerCase().compareTo(o2.getAppText().toLowerCase());
                     SharedPreferences preferences = getSharedPreferences("Librapp", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putInt("ByAppText",compareByAppText);

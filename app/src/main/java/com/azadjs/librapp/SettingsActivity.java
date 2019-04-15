@@ -1,14 +1,15 @@
 package com.azadjs.librapp;
 
-import android.content.Intent;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-public class SettingsActivity extends AppCompatActivity {
+import com.r0adkll.slidr.Slidr;
 
+public class SettingsActivity extends AppCompatActivity {
     TextView appVersion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +28,8 @@ public class SettingsActivity extends AppCompatActivity {
                 finish();
             }
     });
-
         appVersion = findViewById(R.id.app_version);
         appVersion.setText(BuildConfig.VERSION_NAME);
-}
+        Slidr.attach(this);
+    }
 }

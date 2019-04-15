@@ -88,6 +88,20 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
                 }
             }
         });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Context mContext = v.getContext();
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                String shareBody = appModel.getAppUrl();
+                String shareSub  = "Why did you still don't know about "+appModel.getAppText()+" ?";
+                intent.putExtra(Intent.EXTRA_SUBJECT, shareSub);
+                intent.putExtra(Intent.EXTRA_TEXT, shareBody);
+                mContext.startActivity(Intent.createChooser(intent,"Share via"));
+                return true;
+            }
+        });
     }
 
 

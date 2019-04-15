@@ -4,8 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
-
+import android.widget.TextView;
 
 
 import androidx.annotation.Nullable;
@@ -55,7 +56,13 @@ public class RecyclerFragment extends Fragment implements SwipeRefreshLayout.OnR
         recyclerView.setAdapter(appAdapter);
         appAdapter.notifyDataSetChanged();
         changeView();
-
+        TextView appBarText = MainActivity.getAppBarText();
+        appBarText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                layoutManager.smoothScrollToPosition(recyclerView, null, 0);
+            }
+        });
         return v;
     }
 
@@ -79,12 +86,6 @@ public class RecyclerFragment extends Fragment implements SwipeRefreshLayout.OnR
         changeView();
         mSwipeRefreshLayout.setRefreshing(false);
     }
-
-    /*public void changeEmptyView(){
-        if(appAdapter.getItemCount() == 0){
-            emptyView.setVisibility(View.VISIBLE);
-        }
-    }*/
 
 
 }

@@ -6,7 +6,7 @@
     android:layout_marginBottom="-5sp"
     android:background="@color/colorPrimary"
     android:orientation="vertical"
-    cardview:cardBackgroundColor="#fafafa"
+    cardview:cardBackgroundColor="@color/colorPrimary"
     cardview:cardCornerRadius="10sp"
     cardview:cardElevation="3sp"
     cardview:cardUseCompatPadding="true">

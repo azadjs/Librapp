@@ -3,6 +3,8 @@ package com.azadjs.librapp;
 import android.content.Intent;
 import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+
 import android.os.Bundle;
 
 import com.google.firebase.auth.FirebaseAuth;

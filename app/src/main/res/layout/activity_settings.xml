@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorPrimary"
+    android:background="@color/background_material_light"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentStart="true"
     tools:context=".SettingsActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -18,7 +20,7 @@
         android:id="@+id/toolbar_settings"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#17b2aa"
+        android:background="@color/appColor"
         app:theme="@style/ToolBarStyle"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme">
@@ -34,42 +36,52 @@
         android:paddingLeft="20sp"
         android:paddingRight="20sp"
         android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:layout_width="200sp"
+            android:layout_height="200sp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/logo"
+            android:layout_marginBottom="10sp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10sp"
+        android:layout_marginBottom="10sp"
+        android:background="@drawable/button_background_checked"
+        android:backgroundTint="@color/appColor">
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10sp"
-            android:layout_marginBottom="10sp"
-            android:background="@drawable/button_background_checked"
-            android:backgroundTint="@color/appColor">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_theme"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:textColor="@color/colorPrimary"/>
-            <Switch
-                android:id="@+id/dark_mode_switcher"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="15sp"
-                android:paddingBottom="15sp"
-                android:text="@string/settings_theme_dark"
-                android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
-                android:theme="@style/SwitchMint"/>
-            <Switch
-                android:id="@+id/amoled_mode_switcher"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="15sp"
-                android:paddingBottom="10sp"
-                android:text="@string/settings_theme_amoled"
-                android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
-                android:theme="@style/SwitchMint"/>
-        </LinearLayout>
+            android:text="@string/settings_instructions"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimary"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_tap_appbar"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_tap_item"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_tap_delete"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_tap_item_long"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp"/>
+    </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -89,8 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingTop="15sp"
-                android:paddingBottom="10sp">
+                android:paddingTop="15sp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -105,7 +116,38 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="14sp"/>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="15sp"
+                android:paddingBottom="10sp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_github"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp"/>
+                <TextView
+                    android:id="@+id/app_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5sp"
+                    android:autoLink="web"
+                    android:linksClickable="true"
+                    android:textColorLink="@color/colorPrimary"
+                    android:text="@string/settings_github_link"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp"/>
+            </LinearLayout>
 
         </LinearLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:background="@drawable/button_background_checked"
+            android:text="@string/settings_rate_us"
+            android:textColor="@color/colorPrimary"
+            android:backgroundTint="@color/appColor"
+            android:layout_height="wrap_content" />
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

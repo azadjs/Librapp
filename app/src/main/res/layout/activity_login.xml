@@ -45,35 +45,35 @@
             android:textSize="30sp"
             android:text="@string/app_name"
             android:paddingTop="40sp"
-            android:textColor="#232323" />
+            android:textColor="@color/mateBlack" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="80sp"
             android:textSize="16sp"
+            android:textColor="@color/gray"
             android:layout_marginLeft="16sp"
             android:layout_marginRight="16sp"
             android:layout_centerHorizontal="true"
             android:text="@string/app_desc"
             android:maxLines="1" />
     </RelativeLayout>
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/login_button_relative"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical"
         android:layout_below="@id/login__text_relative">
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/google_sign"
-            app:buttonSize="wide"
+            app:buttonSize="icon_only"
             app:colorScheme="light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
             android:paddingBottom="40sp">
-
         </com.google.android.gms.common.SignInButton>
-    </RelativeLayout>
+    </LinearLayout>
 </RelativeLayout>
