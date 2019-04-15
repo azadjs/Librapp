@@ -23,8 +23,9 @@
     <string name="settings_github_link">github.com/azadjs/Librapp</string>
     <string name="settings_rate_us">RATE US</string>
     <string name="settings_instructions">Instructions</string>
-    <string name="settings_tap_appbar">Tap Librapp  -    to scroll up</string>
-    <string name="settings_tap_item">Tap app    -  to go to the Play Store</string>
-    <string name="settings_tap_item_long">Long tap  -    to share the app</string>
-    <string name="settings_tap_delete">Tap delete icon  -    to delete app from list</string>
+    <string name="settings_tap_appbar">Tap Librapp    -    to scroll up</string>
+    <string name="settings_tap_item">Tap app    -    to go to the Play Store</string>
+    <string name="settings_tap_item_long">Long tap    -    to share the app</string>
+    <string name="settings_tap_delete">Tap delete icon    -    to delete app from list</string>
+    <string name="settings_tap_delete_long">Long tap delete icon    -    to delete all apps</string>
 </resources>

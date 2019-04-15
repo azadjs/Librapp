@@ -19,17 +19,22 @@ import androidx.fragment.app.FragmentTransaction;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -39,11 +44,10 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-    EditText searchBar;
     static TextView appBarText;
+    EditText searchBar;
     ImageButton cancelSearchButton;
     LinearLayout searchBarLayout;
-
     BottomAppBar bottomAppBar;
     FloatingActionButton floatingActionButton;
 
@@ -64,14 +68,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-        searchBar = findViewById(R.id.search_bar);
         appBarText = findViewById(R.id.app_bar_text);
+        bottomAppBar = findViewById(R.id.bottom_app_bar);
+        searchBar = findViewById(R.id.search_bar);
         cancelSearchButton = findViewById(R.id.cancel_search);
         searchBarLayout = findViewById(R.id.search_layout);
-        bottomAppBar = findViewById(R.id.bottom_app_bar);
-
         setSupportActionBar(bottomAppBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -127,29 +128,23 @@ public class MainActivity extends AppCompatActivity {
                     AppModel appModel = dataSnapshot.getValue(AppModel.class);
                     appModelResult.add(0, appModel);
                     AddAppDialog.setAppModelResult(appModelResult);
-
                     reloadFragment(fragment);
                 }
 
                 @Override
-                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                }
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
 
                 @Override
-                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                }
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) { }
 
                 @Override
-                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                }
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
 
                 @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
+                public void onCancelled(@NonNull DatabaseError databaseError) { }
             });
         }
+
         cancelSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,38 +157,47 @@ public class MainActivity extends AppCompatActivity {
                 searchBarLayout.setVisibility(View.GONE);
                 searchBar.setText(null);
                 appBarText.setVisibility(View.VISIBLE);
+                Query query = databaseReference;
+                query.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        AppModel appModel = dataSnapshot.getValue(AppModel.class);
+                        appModelResult.add(0, appModel);
+                        AddAppDialog.setAppModelResult(appModelResult);
+                        reloadFragment(fragment);
+                    }
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) { }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) { }
+                });
             }
         });
 
-
-
-        /*searchBar.addTextChangedListener(new TextWatcher() {
+        searchBar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                filter(s.toString());
             }
-
             @Override
             public void afterTextChanged(Editable s) {
-                filter(s.toString());
+                AppAdapter appAdapter = new AppAdapter(AddAppDialog.getAppModelResult());
+                RecyclerFragment.getInstance().setAdapter();
+                appAdapter.getFilter().filter(s.toString());
             }
-        });*/
+        });
     }
 
-    /*private void filter(String text) {
-        ArrayList<AppModel> filteredApps = new ArrayList<>();
-        for (AppModel s : appModelResult) {
-            if(s.getAppText().toLowerCase().contains(text.toLowerCase())){
-                filteredApps.add(s);
-                reloadFragment(fragment);
-            }
-        }
-        appAdapter.filterList(filteredApps);
-    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

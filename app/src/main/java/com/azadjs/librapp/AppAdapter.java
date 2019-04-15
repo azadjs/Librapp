@@ -1,11 +1,15 @@
 package com.azadjs.librapp;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,19 +17,55 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
+public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> implements Filterable
+{
 
     private List<AppModel> appModelList;
+    private List<AppModel> appAdapterListFull;
     FirebaseAuth mAuth;
 
     public AppAdapter(List<AppModel> appModelList) {
         this.appModelList = appModelList;
+        appAdapterListFull = appModelList;
     }
+
+    @Override
+    public Filter getFilter() {
+        return appFilter;
+    }
+
+    private Filter appFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<AppModel> filteredlist = new ArrayList<>();
+            if(constraint == null || constraint.length() == 0){
+                filteredlist.addAll(appAdapterListFull);
+            }else{
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for(AppModel item: appAdapterListFull){
+                    if(item.getAppText().toLowerCase().contains(filterPattern)) {
+                        filteredlist.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredlist;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            appAdapterListFull.clear();
+            appAdapterListFull.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
 
     public static class AppViewHolder extends RecyclerView.ViewHolder{
 
@@ -102,6 +142,35 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
                 return true;
             }
         });
+
+        holder.appDelete.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Context mContext = v.getContext();
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mContext, R.style.AppCompatAlertDialogStyle);
+                alertDialogBuilder.setTitle("Delete all apps");
+                alertDialogBuilder.setMessage("Are you sure you want to delete all apps?");
+                alertDialogBuilder.setIcon(R.drawable.ic_delete);
+                alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        appModelList.clear();
+                        notifyDataSetChanged();
+                        MainActivity.databaseReference.removeValue();
+                        RecyclerFragment.getInstance().onRefresh();
+                    }
+                });
+                alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+                return true;
+            }
+        });
     }
 
 
@@ -110,10 +179,5 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
     public int getItemCount() {
         return appModelList.size();
     }
-
-    /*public void filterList(List<AppModel> filteredList){
-       this.appModelList = filteredList;
-       notifyDataSetChanged();
-    }*/
 
 }

@@ -16,7 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent">
-
         <LinearLayout
             android:id="@+id/search_layout"
             android:layout_width="match_parent"
@@ -25,23 +24,23 @@
             android:paddingStart="10sp"
             android:paddingEnd="10sp"
             android:visibility="gone">
-        <EditText
-            android:id="@+id/search_bar"
-            android:hint="@string/action_search"
-            android:layout_width="0sp"
-            android:layout_height="?actionBarSize"
-            android:layout_weight="1"
-            android:textColor="@color/gray"
-            android:backgroundTint="@color/gray"
-            android:inputType="text" />
-        <ImageButton
-            android:id="@+id/cancel_search"
-            android:layout_width="50sp"
-            android:layout_height="50sp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_cancel"
-            android:tint="@color/gray"
-            android:background="@color/colorPrimary" />
+            <EditText
+                android:id="@+id/search_bar"
+                android:hint="@string/action_search"
+                android:layout_width="0sp"
+                android:layout_height="?actionBarSize"
+                android:layout_weight="1"
+                android:textColor="@color/gray"
+                android:backgroundTint="@color/gray"
+                android:inputType="text" />
+            <ImageButton
+                android:id="@+id/cancel_search"
+                android:layout_width="50sp"
+                android:layout_height="50sp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_cancel"
+                android:tint="@color/gray"
+                android:background="@color/colorPrimary" />
         </LinearLayout>
         <TextView
             android:id="@+id/app_bar_text"

@@ -53,10 +53,11 @@ public class RecyclerFragment extends Fragment implements SwipeRefreshLayout.OnR
         ((LinearLayoutManager) layoutManager).setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         appAdapter = new AppAdapter(AddAppDialog.getAppModelResult());
-        recyclerView.setAdapter(appAdapter);
+        //recyclerView.setAdapter(appAdapter);
+        setAdapter();
         appAdapter.notifyDataSetChanged();
         changeView();
-        TextView appBarText = MainActivity.getAppBarText();
+       TextView appBarText = MainActivity.getAppBarText();
         appBarText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,6 +86,10 @@ public class RecyclerFragment extends Fragment implements SwipeRefreshLayout.OnR
         mSwipeRefreshLayout.setRefreshing(true);
         changeView();
         mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    public void setAdapter(){
+        recyclerView.setAdapter(appAdapter);
     }
 
 
