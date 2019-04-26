@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +34,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> i
 
     public AppAdapter(List<AppModel> appModelList) {
         this.appModelList = appModelList;
-        appAdapterListFull = appModelList;
+        this.appAdapterListFull = appModelList;
     }
 
     @Override
@@ -132,6 +134,8 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> i
             @Override
             public boolean onLongClick(View v) {
                 Context mContext = v.getContext();
+                Vibrator vibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+                vibrator.vibrate(30);
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
                 String shareBody = appModel.getAppUrl();
@@ -147,6 +151,8 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> i
             @Override
             public boolean onLongClick(View v) {
                 Context mContext = v.getContext();
+                Vibrator vibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+                vibrator.vibrate(30);
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mContext, R.style.AppCompatAlertDialogStyle);
                 alertDialogBuilder.setTitle("Delete all apps");
                 alertDialogBuilder.setMessage("Are you sure you want to delete all apps?");

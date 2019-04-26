@@ -38,7 +38,7 @@ public class Parse extends AsyncTask<Void,Void,Void> {
 
             System.out.println(eName);
 
-            Elements eImageElement = document.select("div.dQrBL img[src]");
+            Elements eImageElement = document.select("div.xSyT2c img[src]");
             String eImage = eImageElement.attr("src");
             seteImage(eImage);
             System.out.println(eImage);

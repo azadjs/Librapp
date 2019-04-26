@@ -157,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
                 searchBarLayout.setVisibility(View.GONE);
                 searchBar.setText(null);
                 appBarText.setVisibility(View.VISIBLE);
+                AddAppDialog.getAppModelResult().clear();
                 Query query = databaseReference;
                 query.addChildEventListener(new ChildEventListener() {
                     @Override
