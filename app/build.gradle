@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('C:\\Users\\Azad M\\AndroidStudioProjects\\Librapp\\Keys\\keystore.jks')
+            keyPassword 'azadffffuck18'
+            storePassword 'yosemit1998tejs'
+            keyAlias = 'key_librapp'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.azadjs.librapp"
@@ -14,6 +22,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }
@@ -39,5 +48,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:16.2.1'
     implementation 'com.r0adkll:slidableactivity:2.0.6'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
+    implementation 'com.google.firebase:firebase-ads:17.2.0'
 }
 apply plugin: 'com.google.gms.google-services'

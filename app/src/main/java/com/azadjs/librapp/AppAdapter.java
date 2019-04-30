@@ -15,6 +15,10 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
@@ -25,12 +29,14 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> implements Filterable
+public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable
 {
 
     private List<AppModel> appModelList;
     private List<AppModel> appAdapterListFull;
     FirebaseAuth mAuth;
+
+
 
     public AppAdapter(List<AppModel> appModelList) {
         this.appModelList = appModelList;
@@ -86,21 +92,23 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> i
         }
     }
 
+
     @NonNull
     @Override
-    public AppViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_list,parent,false);
-        AppViewHolder appViewHolder = new AppViewHolder(v);
-        return  appViewHolder;
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_list, parent, false);
+        return new AppViewHolder(v);
     }
 
+
     @Override
-    public void onBindViewHolder(@NonNull final AppViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
+        AppViewHolder appHolder = (AppViewHolder) holder;
         final AppModel appModel = appModelList.get(position);
-        holder.appText.setText(appModel.getAppText());
-        holder.appCategory.setText(appModel.getAppCategory());
-        holder.appDesc.setText(appModel.getAppDesc());
-        Picasso.get().load(appModel.getImage()).into(holder.appImage);
+        appHolder.appText.setText(appModel.getAppText());
+        appHolder.appCategory.setText(appModel.getAppCategory());
+        appHolder.appDesc.setText(appModel.getAppDesc());
+        Picasso.get().load(appModel.getImage()).into(appHolder.appImage);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,9 +121,12 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> i
         });
 
         mAuth = FirebaseAuth.getInstance();
-        holder.appDelete.setOnClickListener(new View.OnClickListener() {
+        appHolder.appDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (MainActivity.mInterstitialAd.isLoaded()) {
+                    MainActivity.mInterstitialAd.show();
+                }
                 if(appModelList.size() > 1) {
                     appModelList.remove(position);
                     notifyItemRemoved(position);
@@ -130,7 +141,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> i
                 }
             }
         });
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+        appHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 Context mContext = v.getContext();
@@ -147,7 +158,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> i
             }
         });
 
-        holder.appDelete.setOnLongClickListener(new View.OnLongClickListener() {
+        appHolder.appDelete.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 Context mContext = v.getContext();
@@ -177,6 +188,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> i
                 return true;
             }
         });
+
     }
 
 

@@ -1,10 +1,10 @@
 package com.azadjs.librapp;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,8 +15,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class RecyclerFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+
+
 
     public RecyclerFragment() {
     }
@@ -53,7 +61,6 @@ public class RecyclerFragment extends Fragment implements SwipeRefreshLayout.OnR
         ((LinearLayoutManager) layoutManager).setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         appAdapter = new AppAdapter(AddAppDialog.getAppModelResult());
-        //recyclerView.setAdapter(appAdapter);
         setAdapter();
         appAdapter.notifyDataSetChanged();
         changeView();
@@ -91,6 +98,7 @@ public class RecyclerFragment extends Fragment implements SwipeRefreshLayout.OnR
     public void setAdapter(){
         recyclerView.setAdapter(appAdapter);
     }
+
 
 
 }

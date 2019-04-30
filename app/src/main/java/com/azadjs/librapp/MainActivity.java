@@ -1,5 +1,10 @@
 package com.azadjs.librapp;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -51,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     BottomAppBar bottomAppBar;
     FloatingActionButton floatingActionButton;
 
-
+    public static InterstitialAd mInterstitialAd;
     private static List<AppModel> appModelResult = new ArrayList<>();
 
     FragmentManager fragmentManager;
@@ -77,6 +82,10 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
         floatingActionButton = findViewById(R.id.fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -269,4 +278,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().detach(fragment).commitNowAllowingStateLoss();
         getSupportFragmentManager().beginTransaction().attach(fragment).commitAllowingStateLoss();
     }
+
+
 }
