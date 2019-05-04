@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Librapp</string>
+    <string name="app_name_instant">Powered by Librapp Instant</string>
     <string name="app_desc">Personal library for your favorite apps</string>
     <string name="action_signout">Sign out</string>
     <string name="action_settings">Settings</string>
@@ -28,4 +29,11 @@
     <string name="settings_tap_item_long">Long tap    -    to share the app</string>
     <string name="settings_tap_delete">Tap delete icon    -    to delete app from list</string>
     <string name="settings_tap_delete_long">Long tap delete icon    -    to delete all apps</string>
+
+    <string name="privacy_policy">
+        <a href="https://drive.google.com/open?id=17VOi0Ej4_0AmSSCUACK7G1ZrKCXpHPA0">Privacy Policy</a>
+    </string>
+    <string name="terms_and_conditions">
+        <a href="https://drive.google.com/open?id=1CoIaXHYjR7wz6Zpue2rUYc2-UFPPA3Eq">Terms and Conditions</a>
+    </string>
 </resources>

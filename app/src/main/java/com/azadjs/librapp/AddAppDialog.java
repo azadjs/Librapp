@@ -63,7 +63,7 @@ public class AddAppDialog extends BottomSheetDialog implements AdapterView.OnIte
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //Internet Check
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    private boolean checkConnectivity(){
+    public boolean checkConnectivity(){
         ConnectivityManager connectivityManager = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if(networkInfo == null || !networkInfo.isConnected() || !networkInfo.isAvailable()){
@@ -116,9 +116,10 @@ public class AddAppDialog extends BottomSheetDialog implements AdapterView.OnIte
             @Override
             public void onClick(View v) {
                 appModel.setAppDesc(appDesc.getText().toString());
-                appModel.setImage(Parse.eImage);
-                appModel.setAppText(Parse.eName);
+                appModel.setImage(Parse.geteImage());
+                appModel.setAppText(Parse.geteName());
                 appModel.setAppAddDate(new Date());
+
                 if(appUrl.getText().toString().trim().length() != 0 && checkConnectivity()
                         && appModel.getAppText() != null && appModel.getImage() != null &&
                         !appModel.getAppCategory().equals("ERROR")) {
@@ -131,7 +132,7 @@ public class AddAppDialog extends BottomSheetDialog implements AdapterView.OnIte
                                     if(dataSnapshot.exists()){
                                         Snackbar snackbar = Snackbar.make(viewPos, "This app exists in your library", Snackbar.LENGTH_SHORT);
                                         snackbar.show();
-                                    } else {
+                                    }else{
                                         final String key = MainActivity.databaseReference.push().getKey();
                                         appModel.setAppId(key);
                                         ////////////////////////////////////////////////////////////////////////////////
@@ -175,6 +176,9 @@ public class AddAppDialog extends BottomSheetDialog implements AdapterView.OnIte
                        textView.setText("");
                        textView.setTextColor(Color.RED);
                        textView.setText(R.string.category_error);
+                    }else{
+                        Snackbar snackbar = Snackbar.make(viewPos, "Something went wrong :(", Snackbar.LENGTH_SHORT);
+                        snackbar.show();
                     }
                 }
             }

@@ -95,20 +95,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*Intent intent = getIntent();
-        String action = intent.getAction();
-        System.out.println(action);
-        String type = intent.getType();
-        System.out.println(type);
-        if(Intent.ACTION_SEND.equals(action) && type != null){
-            if("text/*".equals(type)){
-                addAppDialog.show(getSupportFragmentManager(), "AddBottomSheet");
-                String getIntentAppName = intent.getStringExtra(Intent.EXTRA_TEXT);
-                EditText text = AddAppDialog.getAppUrl();
-                text.setText(getIntentAppName);
-            }
-        }*/
-
         bottomAppBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

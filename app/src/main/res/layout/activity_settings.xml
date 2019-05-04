@@ -154,9 +154,38 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="14sp"/>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="20sp"
+                android:paddingRight="20sp"
+                android:paddingTop="10sp"
+                android:paddingBottom="10sp">
+                <TextView
+                    android:id="@+id/privacy_policy"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:linksClickable="true"
+                    android:layout_weight="1"
+                    android:textColorLink="@color/colorPrimary"
+                    android:text="@string/privacy_policy"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp"/>
+                <TextView
+                    android:id="@+id/terms_and_conditions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:linksClickable="true"
+                    android:textColorLink="@color/colorPrimary"
+                    android:text="@string/terms_and_conditions"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp"/>
+            </LinearLayout>
 
         </LinearLayout>
         <Button
+            android:id="@+id/rate_us"
             android:layout_width="match_parent"
             android:background="@drawable/button_background_checked"
             android:text="@string/settings_rate_us"

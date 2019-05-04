@@ -12,40 +12,56 @@ import java.io.IOException;
 public class Parse extends AsyncTask<Void,Void,Void> {
     static String eName,eImage;
 
-    public String geteName() {
+    public static String geteName() {
         return eName;
     }
 
-    public void seteName(String eName) {
-        this.eName = eName;
+    public static void seteName(String eName) {
+        Parse.eName = eName;
     }
 
-    public String geteImage() {
+    public static String geteImage() {
         return eImage;
     }
 
-    public void seteImage(String eImage) {
-        this.eImage = eImage;
+    public static void seteImage(String eImage) {
+        Parse.eImage = eImage;
     }
 
     @Override
     protected Void doInBackground(Void... voids) {
-        try {
-            Document document = Jsoup.connect(AddAppDialog.appUrl.getText().toString()).get();
-            Element eNameElement = document.select("h1.AHFaub>span").first();
-            String eName = eNameElement.text();
-            seteName(eName);
 
-            System.out.println(eName);
+            try {
+                Document document = Jsoup.connect(AddAppDialog.appUrl.getText().toString()).get();
+                Element eNameElement = document.select("h1.AHFaub>span").first();
+                String eName = eNameElement.text();
+                seteName(eName);
+                System.out.println(eName);
 
-            Elements eImageElement = document.select("div.xSyT2c img[src]");
-            String eImage = eImageElement.attr("src");
-            seteImage(eImage);
-            System.out.println(eImage);
+                Elements eImageElement = document.select("div.xSyT2c img[src]");
+                String eImage = eImageElement.attr("src");
+                seteImage(eImage);
+                System.out.println(eImage);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                Document document = Jsoup.connect(InstantAddActivity.appUrl.getText().toString()).get();
+                Element eNameElement = document.select("h1.AHFaub>span").first();
+                String eName = eNameElement.text();
+                seteName(eName);
+                System.out.println(eName);
+
+                Elements eImageElement = document.select("div.xSyT2c img[src]");
+                String eImage = eImageElement.attr("src");
+                seteImage(eImage);
+                System.out.println(eImage);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         return null;
     }
 
