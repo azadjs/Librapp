@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.material.button.MaterialButton;
 import com.r0adkll.slidr.Slidr;
 
 public class SettingsActivity extends AppCompatActivity {

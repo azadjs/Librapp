@@ -26,9 +26,11 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -43,6 +45,7 @@ public class InstantAddActivity extends AppCompatActivity {
     private Button saveButton;
     private Spinner spinnerCategory;
 
+    FirebaseAuth mAuth;
     AppModel appModel = new AppModel();
 
     @Override
@@ -54,32 +57,9 @@ public class InstantAddActivity extends AppCompatActivity {
         appDesc = findViewById(R.id.app_desc_instant);
         saveButton = findViewById(R.id.save_button_instant);
         spinnerCategory = findViewById(R.id.spinner_category_instant);
-        List<String> categories = new ArrayList<String>();
-        categories.add(0,"Choose category");
-        categories.add("Education");
-        categories.add("Entertainment");
-        categories.add("Games");
-        categories.add("Health");
-        categories.add("Personalization");
-        categories.add("Social");
-        categories.add("Tools");
-        final ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,categories);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCategory.setAdapter(adapter);
-        spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(parent.getItemAtPosition(position).equals("Choose category")){
-                    appModel.setAppCategory("ERROR");
-                }else{
-                    String selectedCategory = parent.getItemAtPosition(position).toString();
-                    appModel.setAppCategory(selectedCategory);
-                }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
-        });
 
+        mAuth = FirebaseAuth.getInstance();
+        categoriesAdd();
         instantApp();
         new ParseInstant().execute();
         appModel.setAppUrl(appUrl.getText().toString());
@@ -111,7 +91,10 @@ public class InstantAddActivity extends AppCompatActivity {
                                         ////////////////////////////////////////////////////////////////////////////////
                                         AppModel myAppModel = new AppModel(key, appModel.getImage(),appModel.getAppText(),
                                                 appModel.getAppCategory(),appModel.getAppDesc(),appModel.getAppUrl(), appModel.getAppAddDate());
-                                        MainActivity.databaseReference.child(key).setValue(myAppModel);
+                                        //MainActivity.databaseReference.child(key).setValue(myAppModel);
+                                        FirebaseDatabase.getInstance().getReference("Users").
+                                                child(mAuth.getUid()).child(key).setValue(myAppModel);
+                                        Toast.makeText(getApplicationContext(),"Successful!",Toast.LENGTH_SHORT).show();
                                         finish();
                                     }
                                 }
@@ -132,9 +115,10 @@ public class InstantAddActivity extends AppCompatActivity {
                         textView.setText("");
                         textView.setTextColor(Color.RED);
                         textView.setText(R.string.category_error);
+                    }else {
+                        Toast.makeText(getApplicationContext(),"Something went wrong. Try again :(",Toast.LENGTH_SHORT).show();
                     }
                 }
-                //finish();
             }
         });
 
@@ -162,5 +146,34 @@ public class InstantAddActivity extends AppCompatActivity {
                 appUrl.setText(getIntentAppName);
             }
         }
+    }
+
+    public void categoriesAdd(){
+        List<String> categories = new ArrayList<String>();
+        categories.add(0,"Choose category");
+        categories.add("Education");
+        categories.add("Entertainment");
+        categories.add("Games");
+        categories.add("Health");
+        categories.add("Personalization");
+        categories.add("Social");
+        categories.add("Tools");
+        final ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,categories);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCategory.setAdapter(adapter);
+        spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(parent.getItemAtPosition(position).equals("Choose category")){
+                    appModel.setAppCategory("ERROR");
+                }else{
+                    String selectedCategory = parent.getItemAtPosition(position).toString();
+                    appModel.setAppCategory(selectedCategory);
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
+
     }
 }

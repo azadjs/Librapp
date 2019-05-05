@@ -20,10 +20,9 @@
             android:layout_width="200sp"
             android:layout_height="200sp"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/logo"
+            android:src="@drawable/ic_logo"
             android:adjustViewBounds="true"
             android:maxWidth="200sp"
-            android:layout_marginTop="30sp"
             android:maxHeight="200sp"
             android:scaleType="fitCenter"/>
     </RelativeLayout>

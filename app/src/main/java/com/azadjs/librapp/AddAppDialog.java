@@ -83,19 +83,8 @@ public class AddAppDialog extends BottomSheetDialog implements AdapterView.OnIte
         appDesc = v.findViewById(R.id.app_desc);
         saveButton = v.findViewById(R.id.save_button);
         spinnerCategory = v.findViewById(R.id.spinner_category);
-        List<String> categories = new ArrayList<String>();
-        categories.add(0,"Choose category");
-        categories.add("Education");
-        categories.add("Entertainment");
-        categories.add("Games");
-        categories.add("Health");
-        categories.add("Personalization");
-        categories.add("Social");
-        categories.add("Tools");
-        final ArrayAdapter<CharSequence> adapter = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,categories);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCategory.setAdapter(adapter);
-        spinnerCategory.setOnItemSelectedListener(this);
+
+        categoriesAdd();
 
         appUrl.addTextChangedListener(new TextWatcher() {
             @Override
@@ -201,5 +190,20 @@ public class AddAppDialog extends BottomSheetDialog implements AdapterView.OnIte
 
     }
 
+    public void categoriesAdd(){
+        List<String> categories = new ArrayList<String>();
+        categories.add(0,"Choose category");
+        categories.add("Education");
+        categories.add("Entertainment");
+        categories.add("Games");
+        categories.add("Health");
+        categories.add("Personalization");
+        categories.add("Social");
+        categories.add("Tools");
+        final ArrayAdapter<CharSequence> adapter = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,categories);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCategory.setAdapter(adapter);
+        spinnerCategory.setOnItemSelectedListener(this);
+    }
 
 }

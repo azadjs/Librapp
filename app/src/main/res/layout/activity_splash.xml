@@ -7,8 +7,8 @@
     tools:context=".SplashActivity">
 
     <ImageView
-        android:layout_width="200sp"
-        android:layout_height="200sp"
+        android:layout_width="300sp"
+        android:layout_height="300sp"
         android:layout_centerInParent="true"
-        android:src="@drawable/logo"/>
+        android:src="@drawable/ic_logo"/>
 </RelativeLayout>

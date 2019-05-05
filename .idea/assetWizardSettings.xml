@@ -51,7 +51,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="scalingPercent" value="84" />
+                                                <entry key="scalingPercent" value="90" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
@@ -63,10 +63,7 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="fafafa" />
-                                      <entry key="foregroundImage" value="C:\Users\Azad M\Downloads\books-stack-of-three.psd" />
-                                      <entry key="legacyIconShape" value="CIRCLE" />
-                                      <entry key="webIconShape" value="HRECT" />
+                                      <entry key="foregroundImage" value="C:\Users\Azad M\Downloads\Telegram Desktop\ILL KILL YOU.svg" />
                                     </map>
                                   </option>
                                 </PersistentState>
