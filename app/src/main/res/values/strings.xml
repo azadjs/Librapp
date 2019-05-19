@@ -22,6 +22,7 @@
     <string name="settings_app_version">Application version: </string>
     <string name="settings_github">Source code: </string>
     <string name="settings_github_link">github.com/azadjs/Librapp</string>
+    <string name="settings_thanks">Special thanks to -</string>
     <string name="settings_rate_us">RATE US</string>
     <string name="settings_instructions">Instructions</string>
     <string name="settings_tap_appbar">Tap Librapp    -    to scroll up</string>
@@ -35,5 +36,8 @@
     </string>
     <string name="terms_and_conditions">
         <a href="https://drive.google.com/open?id=1CoIaXHYjR7wz6Zpue2rUYc2-UFPPA3Eq">Terms and Conditions</a>
+    </string>
+    <string name="settings_special_thanks">
+        <a href="https://www.instagram.com/ok__die/">@ok__die</a>
     </string>
 </resources>

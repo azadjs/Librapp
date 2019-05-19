@@ -40,8 +40,8 @@
         android:layout_gravity="center_horizontal"
         android:orientation="vertical">
         <ImageView
-            android:layout_width="200sp"
-            android:layout_height="200sp"
+            android:layout_width="150sp"
+            android:layout_height="150sp"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/ic_logo"
             android:layout_marginBottom="10sp"/>
@@ -135,8 +135,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingTop="15sp"
-                android:paddingBottom="10sp">
+                android:paddingTop="10sp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -154,6 +153,28 @@
                     android:text="@string/settings_github_link"
                     android:textColor="@color/colorPrimary"
                     android:textSize="14sp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="10sp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_thanks"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp"/>
+                <TextView
+                    android:id="@+id/settings_thanks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:linksClickable="true"
+                    android:textColorLink="@color/colorPrimary"
+                    android:text="@string/settings_special_thanks"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp"
+                    android:layout_marginStart="5sp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"

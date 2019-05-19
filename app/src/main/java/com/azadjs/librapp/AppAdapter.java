@@ -146,7 +146,7 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> im
             public boolean onLongClick(View v) {
                 Context mContext = v.getContext();
                 Vibrator vibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
-                vibrator.vibrate(30);
+                vibrator.vibrate(25);
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
                 String shareBody = appModel.getAppUrl();
@@ -163,7 +163,7 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> im
             public boolean onLongClick(View v) {
                 Context mContext = v.getContext();
                 Vibrator vibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
-                vibrator.vibrate(30);
+                vibrator.vibrate(25);
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mContext, R.style.AppCompatAlertDialogStyle);
                 alertDialogBuilder.setTitle("Delete all apps");
                 alertDialogBuilder.setMessage("Are you sure you want to delete all apps?");
@@ -183,8 +183,8 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> im
 
                     }
                 });
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
+               // AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialogBuilder.show();
                 return true;
             }
         });

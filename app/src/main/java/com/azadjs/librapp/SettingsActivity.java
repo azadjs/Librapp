@@ -11,11 +11,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.material.button.MaterialButton;
 import com.r0adkll.slidr.Slidr;
 
 public class SettingsActivity extends AppCompatActivity {
-    TextView appVersion, privacyPolicy, termsAndConditions;
+    TextView appVersion, privacyPolicy, termsAndConditions, specialThanks;
     Button rateUs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +24,7 @@ public class SettingsActivity extends AppCompatActivity {
         appVersion = findViewById(R.id.app_version);
         privacyPolicy = findViewById(R.id.privacy_policy);
         termsAndConditions = findViewById(R.id.terms_and_conditions);
+        specialThanks = findViewById(R.id.settings_thanks);
         rateUs = findViewById(R.id.rate_us);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -43,6 +43,7 @@ public class SettingsActivity extends AppCompatActivity {
         Slidr.attach(this);
         privacyPolicy.setMovementMethod(LinkMovementMethod.getInstance());
         termsAndConditions.setMovementMethod(LinkMovementMethod.getInstance());
+        specialThanks.setMovementMethod(LinkMovementMethod.getInstance());
         rateUs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
